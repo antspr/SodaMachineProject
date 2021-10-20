@@ -1,5 +1,6 @@
 import unittest
 from customer import Customer
+from coins import Dime
 
 class TestGetWalletCoin(unittest.TestCase):
     """Test that each type of coin can be returned from Wallet"""
@@ -31,6 +32,27 @@ class TestGetWalletCoin(unittest.TestCase):
         """Test that penny is returned from wallet"""
         returned_coin = self.customer.get_wallet_coin('Rubie')  
         self.assertEqual(None, returned_coin)    
+
+class TestAddCoinsToWallet(unittest.TestCase):
+    """ Test that coins can be added to wallet"""
+    def setUp(self):
+        self.customer = Customer()
+    
+    def test_add_coins_to_wallet_adds_coins_to_list(self):
+        "Adds coins to list"
+        wallet_length_check = len(self.customer.wallet.money)
+        coins_list = [Dime(), Dime(), Dime()]
+        self.customer.add_coins_to_wallet(coins_list)
+        self.assertEqual (91, wallet_length_check + 3)
+
+    def test_add_no_coins_to_wallet_adds_no_coins_to_list(self):
+        "Adds no coins to wallet"
+        wallet_length_check = len(self.customer.wallet.money)
+        coins_list = []
+        self.customer.add_coins_to_wallet(coins_list)
+        self.assertEqual (88, wallet_length_check)
+
+        
 
 if __name__ == '__main__':
     unittest.main()
